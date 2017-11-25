@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile : MonoBehaviour {
+public class Crate : MonoBehaviour {
 
-
-	public int PosX;
-	public int PosZ;
-
-	public ColourOfPaint ColourOnTile;
+	public Tile Location;
 
 	// Use this for initialization
 	void Start () {
@@ -18,10 +14,5 @@ public class Tile : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-	}
-
-	public void ChangeColour(ColourOfPaint inColour)
-	{
-		this.ColourOnTile = inColour;
 	}
 }

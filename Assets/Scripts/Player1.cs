@@ -16,7 +16,8 @@ public class Player1 : MonoBehaviour {
 
 	float stunTimer;
 	public bool IsStunned;
-	//bool IsAcceptingInput;
+	public bool IsPlacingBomb;
+	public float TimeToReachTarget;
 	ColourOfPaint MyColour;
 	int Score;
 
@@ -24,15 +25,18 @@ public class Player1 : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		IsStunned = false;
-		
+		IsPlacingBomb = false;
+		TimeToReachTarget = 0f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		if (!IsStunned) {
+		if (!IsStunned && !IsPlacingBomb) {
 			ProcessInput ();
-		} else {
+		}
+
+		if (IsStunned){
 			stunTimer -= Time.deltaTime;
 			if (stunTimer < 0) {
 				IsStunned = false;
@@ -44,6 +48,18 @@ public class Player1 : MonoBehaviour {
 			//transform.Translate(Vector3.forward*Time.deltaTime);
 			float step = speed * Time.deltaTime;
 			transform.position = Vector3.MoveTowards(transform.position, target, step);
+
+			if (TimeToReachTarget > 0f) {
+				TimeToReachTarget -= Time.deltaTime;
+			} else {
+				IsMoving = false;
+				TimeToReachTarget = 0f;
+			}
+
+		}
+
+		if (IsPlacingBomb && !IsMoving) {
+			PlaceBomb ();
 		}
 
 	}
@@ -71,7 +87,7 @@ public class Player1 : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			PlaceBombIfValid ();
+			PlacingBombIfValid ();
 		}
 
 	}
@@ -82,11 +98,17 @@ public class Player1 : MonoBehaviour {
 		transform.position = new Vector3 ((float)location.PosX + 0.5f, 1f, (float)location.PosZ+0.5f);
 	}
 
-	void PlaceBombIfValid()
+	void PlacingBombIfValid()
 	{
-		if (!MyBomb.isTicking) {
-			MyBomb.BringBombInPlayArea (Location);
+		if (!MyBomb.isTicking && !IsStunned) {
+			IsPlacingBomb = true;
 		}
+	}
+
+	void PlaceBomb()
+	{		
+		MyBomb.BringBombInPlayArea (Location);
+		IsPlacingBomb = false;
 	}
 
 	public void Stun()

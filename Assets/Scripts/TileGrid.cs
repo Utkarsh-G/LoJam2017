@@ -6,6 +6,8 @@ public class TileGrid : MonoBehaviour {
 
 	public Tile[,] Tiles;
 	public GameObject TilePrefab; 
+	public GameObject CratePrefab;
+	public LevelLayout Level1;
 	public Bomb myBomb;
 	public Player1 playerOne;
 	public int SIZEOFARENA = 11;
@@ -37,6 +39,14 @@ public class TileGrid : MonoBehaviour {
 				TempTile.PosZ = j;
 				TempTileObject.transform.position = new Vector3 ((float)i+0.5f, 0f, (float)j+0.5f);
 				Tiles [i, j] = TempTile;
+
+				if (Level1.CrateArray [i*SIZEOFARENA + j]) {
+					Tiles [i, j].HasCrate = true;
+					Tiles [i, j].CrateGO = Instantiate (CratePrefab, this.transform);
+					Tiles [i, j].CrateGO.transform.position = new Vector3 ((float)i + 0.5f, 1f, (float)j + 0.5f);
+					Tiles [i, j].myCrate = Tiles [i, j].CrateGO.GetComponent<Crate> ();
+					Tiles [i, j].myCrate.Location = Tiles [i, j];
+				}
 			}
 		}
 	}
@@ -106,6 +116,32 @@ public class TileGrid : MonoBehaviour {
 			isValid = false;
 		}
 
+		if (!((tile.PosZ == SIZEOFARENA - 1) && (direction == Direction.Up))) {
+			if (direction == Direction.Up && Tiles [tile.PosX, tile.PosZ + 1].HasCrate) {
+				isValid = false;
+			}
+		}
+
+		if (!((tile.PosZ == 0) && (direction == Direction.Down))) {
+			if (direction == Direction.Down && Tiles [tile.PosX, tile.PosZ - 1].HasCrate) {
+				isValid = false;
+			}
+		}
+
+		if (!((tile.PosX == 0) && (direction == Direction.Left))) {
+			if (direction == Direction.Left && Tiles [tile.PosX - 1 , tile.PosZ].HasCrate) {
+				isValid = false;
+			}
+		}
+
+		if (!((tile.PosX == SIZEOFARENA-1) && (direction == Direction.Right))) {
+			if (direction == Direction.Right && Tiles [tile.PosX + 1, tile.PosZ].HasCrate) {
+				isValid = false;
+			}
+		}
+
+
+
 		return isValid;
 	}
 
@@ -135,5 +171,6 @@ public class TileGrid : MonoBehaviour {
 		}
 
 		player.IsMoving = true;
+		player.TimeToReachTarget += 1f / player.speed;
 	}
 }
