@@ -63,11 +63,17 @@ public class Bomb : MonoBehaviour {
 		//Make sure to not exceed the bounds
 		//Deal damage to players
 		//SplashColour();
-		GameObject splat = Instantiate(ColourSplat);
-		splat.transform.position = new Vector3((float)Location.PosX + 0.5f, 0.5001f, (float)Location.PosZ+0.5f);
-		oneGrid.SplashColour(Location, BombColour);
-
+		SplashColour();
 		ResetBomb ();
+	}
+
+	void SplashColour()
+	{
+		GameObject splat = Instantiate(ColourSplat);
+		float yValue = 0.5f + ((float)oneGrid.NumberOfSplats * 0.001f);
+		splat.transform.position = new Vector3((float)Location.PosX + 0.5f, yValue, (float)Location.PosZ+0.5f);
+		oneGrid.SplashColour(Location, BombColour);
+		oneGrid.NumberOfSplats++;
 	}
 
 	void ResetBomb()

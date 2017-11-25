@@ -9,6 +9,8 @@ public class TileGrid : MonoBehaviour {
 	public Bomb myBomb;
 	public Player1 playerOne;
 	public int SIZEOFARENA = 11;
+
+	public int NumberOfSplats = 2;
 	// Use this for initialization
 	void Awake () {
 		Tiles = new Tile[SIZEOFARENA, SIZEOFARENA];
@@ -47,15 +49,29 @@ public class TileGrid : MonoBehaviour {
 
 	public void SplashColour(Tile location, ColourOfPaint inColour)
 	{
-		Tiles[location.PosX,location.PosZ].ChangeColour(inColour);
-		Tiles[(Mathf.Clamp(location.PosX-1,0,SIZEOFARENA-1)),location.PosZ].ChangeColour(inColour);
-		Tiles[(Mathf.Clamp(location.PosX-2,0,SIZEOFARENA-1)),location.PosZ].ChangeColour(inColour);
-		Tiles[(Mathf.Clamp(location.PosX+1,0,SIZEOFARENA-1)),location.PosZ].ChangeColour(inColour);
-		Tiles[(Mathf.Clamp(location.PosX+2,0,SIZEOFARENA-1)),location.PosZ].ChangeColour(inColour);
-		Tiles[location.PosX,(Mathf.Clamp(location.PosZ-1,0,SIZEOFARENA-1))].ChangeColour(inColour);
-		Tiles[location.PosX,(Mathf.Clamp(location.PosZ-2,0,SIZEOFARENA-1))].ChangeColour(inColour);
-		Tiles[location.PosX,(Mathf.Clamp(location.PosZ+1,0,SIZEOFARENA-1))].ChangeColour(inColour);
-		Tiles[location.PosX,(Mathf.Clamp(location.PosZ+2,0,SIZEOFARENA-1))].ChangeColour(inColour);
+		Tile[] splashedTiles = new Tile[9];
+		splashedTiles[0] = Tiles [location.PosX, location.PosZ];
+		splashedTiles[1] = Tiles [(Mathf.Clamp (location.PosX - 1, 0, SIZEOFARENA - 1)), location.PosZ];
+		splashedTiles[2] = Tiles [(Mathf.Clamp (location.PosX - 2, 0, SIZEOFARENA - 1)), location.PosZ];
+		splashedTiles[3] = Tiles [(Mathf.Clamp (location.PosX + 1, 0, SIZEOFARENA - 1)), location.PosZ];
+		splashedTiles[4] = Tiles [(Mathf.Clamp (location.PosX + 2, 0, SIZEOFARENA - 1)), location.PosZ];
+		splashedTiles [5] = Tiles [location.PosX, (Mathf.Clamp (location.PosZ - 1, 0, SIZEOFARENA - 1))];
+		splashedTiles [6] = Tiles [location.PosX, (Mathf.Clamp (location.PosZ - 2, 0, SIZEOFARENA - 1))];
+		splashedTiles [7] = Tiles [location.PosX, (Mathf.Clamp (location.PosZ + 1, 0, SIZEOFARENA - 1))];
+		splashedTiles [8] = Tiles [location.PosX, (Mathf.Clamp (location.PosZ + 2, 0, SIZEOFARENA - 1))];
+		Debug.Log ("Checking for stuns");
+		for (int i = 0; i < 9; i++) {
+			splashedTiles [i].ChangeColour (inColour);
+			AffectPlayers (splashedTiles [i]);
+		}
+	}
+
+	void AffectPlayers(Tile tile)
+	{
+		if (playerOne.Location.PosX == tile.PosX && playerOne.Location.PosZ == tile.PosZ) {
+			playerOne.Stun ();
+			Debug.Log ("Stunning Player");
+		}
 	}
 
 	public void MovePlayer(GameObject Player, Player1 player, Direction direction)

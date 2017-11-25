@@ -637,6 +637,7 @@ MonoBehaviour:
   oneGrid: {fileID: 1157922093}
   ColourSplat: {fileID: 1648286733310246, guid: dba47f6f9296c4bd298208f5ffedbd7d,
     type: 2}
+  isTicking: 0
 --- !u!114 &800399275 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114440959697343840, guid: 93860f96a81b0464f9fa55512298f4f9,
@@ -678,6 +679,8 @@ MonoBehaviour:
   Location: {fileID: 0}
   IsMoving: 0
   speed: 3
+  StunTime: 2
+  IsStunned: 0
 --- !u!23 &1057321688
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -775,6 +778,7 @@ MonoBehaviour:
   myBomb: {fileID: 774315014}
   playerOne: {fileID: 1057321687}
   SIZEOFARENA: 11
+  NumberOfSplats: 0
 --- !u!4 &1157922094
 Transform:
   m_ObjectHideFlags: 0
@@ -997,6 +1001,7 @@ MonoBehaviour:
   Location: {fileID: 800399275}
   oneGrid: {fileID: 1157922093}
   ColourSplat: {fileID: 0}
+  isTicking: 0
 --- !u!23 &1323604074
 MeshRenderer:
   m_ObjectHideFlags: 0
