@@ -69,10 +69,11 @@ public class TileGrid : MonoBehaviour {
 		splashedTiles [6] = Tiles [location.PosX, (Mathf.Clamp (location.PosZ - 2, 0, SIZEOFARENA - 1))];
 		splashedTiles [7] = Tiles [location.PosX, (Mathf.Clamp (location.PosZ + 1, 0, SIZEOFARENA - 1))];
 		splashedTiles [8] = Tiles [location.PosX, (Mathf.Clamp (location.PosZ + 2, 0, SIZEOFARENA - 1))];
-		Debug.Log ("Checking for stuns");
+		Debug.Log ("Checking for stuns and crates");
 		for (int i = 0; i < 9; i++) {
 			splashedTiles [i].ChangeColour (inColour);
 			AffectPlayers (splashedTiles [i]);
+			DestroyCrates (splashedTiles [i]);
 		}
 	}
 
@@ -81,6 +82,14 @@ public class TileGrid : MonoBehaviour {
 		if (playerOne.Location.PosX == tile.PosX && playerOne.Location.PosZ == tile.PosZ) {
 			playerOne.Stun ();
 			Debug.Log ("Stunning Player");
+		}
+	}
+
+	void DestroyCrates(Tile tile)
+	{
+		if (tile.HasCrate) {
+			tile.CrateGO.transform.position += new Vector3 (0f, 100f, 0f);
+			tile.HasCrate = false;
 		}
 	}
 

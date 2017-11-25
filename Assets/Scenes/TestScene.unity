@@ -681,6 +681,8 @@ MonoBehaviour:
   speed: 3
   StunTime: 2
   IsStunned: 0
+  IsPlacingBomb: 0
+  TimeToReachTarget: 0
 --- !u!23 &1057321688
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -775,6 +777,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TilePrefab: {fileID: 1228197794850244, guid: 93860f96a81b0464f9fa55512298f4f9, type: 2}
+  CratePrefab: {fileID: 1196718316829268, guid: 03f0f1784590e437c8c9f4ad9ecebde4,
+    type: 2}
+  Level1: {fileID: 11400000, guid: 3f3ed059a869a4ecb8c371efed8a0329, type: 2}
   myBomb: {fileID: 774315014}
   playerOne: {fileID: 1057321687}
   SIZEOFARENA: 11
