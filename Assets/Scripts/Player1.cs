@@ -6,7 +6,7 @@ public class Player1 : MonoBehaviour {
 
 	public TileGrid oneGrid;
 
-	public GameObject MyBomb;
+	public Bomb MyBomb;
 
 	public Tile Location;
 
@@ -35,23 +35,27 @@ public class Player1 : MonoBehaviour {
 	void ProcessInput()
 	{
 		if (Input.GetKeyDown (KeyCode.UpArrow)) {
-			oneGrid.MovePlayer(gameObject,Direction.Up);
+			oneGrid.MovePlayer(gameObject,this,Direction.Up);
 			Debug.Log ("Hit Up. PosX: "+ Location.PosX + " PosZ: " + Location.PosZ);
 		}
 
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
-			oneGrid.MovePlayer(gameObject,Direction.Down);
+			oneGrid.MovePlayer(gameObject,this,Direction.Down);
 			Debug.Log ("Hit Up. PosX: "+ Location.PosX + " PosZ: " + Location.PosZ);
 		}
 
 		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-			oneGrid.MovePlayer(gameObject,Direction.Left);
+			oneGrid.MovePlayer(gameObject,this,Direction.Left);
 			Debug.Log ("Hit Up. PosX: "+ Location.PosX + " PosZ: " + Location.PosZ);
 		}
 
 		if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			oneGrid.MovePlayer(gameObject,Direction.Right);
+			oneGrid.MovePlayer(gameObject,this,Direction.Right);
 			Debug.Log ("Hit Up. PosX: "+ Location.PosX + " PosZ: " + Location.PosZ);
+		}
+
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			PlaceBombIfValid ();
 		}
 
 	}
@@ -60,5 +64,12 @@ public class Player1 : MonoBehaviour {
 	{
 		Location = location;
 		transform.position = new Vector3 ((float)location.PosX + 0.5f, 1f, (float)location.PosZ+0.5f);
+	}
+
+	void PlaceBombIfValid()
+	{
+		if (!MyBomb.isTicking) {
+			MyBomb.BringBombInPlayArea (Location);
+		}
 	}
 }

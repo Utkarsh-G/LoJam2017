@@ -58,10 +58,10 @@ public class TileGrid : MonoBehaviour {
 		Tiles[location.PosX,(Mathf.Clamp(location.PosZ+2,0,SIZEOFARENA-1))].ChangeColour(inColour);
 	}
 
-	public void MovePlayer(GameObject Player, Direction direction)
+	public void MovePlayer(GameObject Player, Player1 player, Direction direction)
 	{
 		//check if player is in arena after move
-		Player1 player = Player.GetComponent<Player1>();
+		player = Player.GetComponent<Player1>();
 		if (IsMoveValid (player.Location, direction)) {
 			//change logical block
 			MoveLogicalPlayer(player,direction);

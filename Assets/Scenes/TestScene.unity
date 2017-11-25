@@ -674,7 +674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oneGrid: {fileID: 1157922093}
-  MyBomb: {fileID: 0}
+  MyBomb: {fileID: 774315014}
   Location: {fileID: 0}
   IsMoving: 0
   speed: 3
